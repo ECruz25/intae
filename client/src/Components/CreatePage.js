@@ -28,11 +28,11 @@ const CreatePage = ({ match, history }) => {
       method: 'POST',
       body: JSON.stringify(request),
       headers: {
-        'Content-Type': 'application/json'
+        'Content- ': 'application/json'
       }
     });
     if (response.status === 200) {
-      history.push(`info/${title}`);
+      history.push(`/`);
     }
   };
 
