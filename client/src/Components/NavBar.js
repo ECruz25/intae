@@ -8,6 +8,7 @@ import {
   Button
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import styles from "./style.module.css";
 
 const NavBar = ({ setPage }) => {
   const [isLogged, setIsLogged] = useState(false);
@@ -74,6 +75,9 @@ const NavBar = ({ setPage }) => {
     if (response.status === 200) {
       setNewCategoryName('');
       setIsCreatingCategory(false);
+      loadCategories();
+    }
+    else {
       loadCategories();
     }
   };
@@ -159,8 +163,8 @@ const NavBar = ({ setPage }) => {
                   </InputGroup.Append>
                 </InputGroup>
               ) : (
-                '+'
-              )}
+                  '+'
+                )}
             </Nav.Link>
           </Nav.Item>
         )}

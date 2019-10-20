@@ -11,6 +11,7 @@ import NavBar from './Components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SingleSectionPage from './Components/SingleSectionPage';
 import CreatePage from './Components/CreatePage';
+import "./App.css";
 
 function App() {
   const [page, setPage] = useState('Home');

@@ -12,10 +12,12 @@ const SingleSectionPage = ({ match }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [matched, setMatched] = useState(match);
 
   useEffect(() => {
     loadPageInformation();
     isLoggedIn();
+    setMatched(matched);
   }, [match, isEditing]);
 
   const loadPageInformation = async () => {
@@ -25,6 +27,10 @@ const SingleSectionPage = ({ match }) => {
     setTitle(json.title);
     setContent(json.content);
     setPageInformation(json);
+    debugger;
+    if (matched.url != matched.url) {
+      setIsEditing(false);
+    }
   };
 
   const isLoggedIn = async () => {
@@ -88,20 +94,20 @@ const SingleSectionPage = ({ match }) => {
           </Button>
         </Form>
       ) : (
-        <div>
-          <h1>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              {pageInformation.title}
-              {canEdit && !isEditing && (
-                <Button variant="info" onClick={handleEditClick}>
-                  Editar
+          <div>
+            <h1>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {pageInformation.title}
+                {canEdit && !isEditing && (
+                  <Button variant="info" onClick={handleEditClick}>
+                    Editar
                 </Button>
-              )}
-            </div>
-          </h1>
-          <div>{require('html-react-parser')(pageInformation.content)}</div>
-        </div>
-      )}
+                )}
+              </div>
+            </h1>
+            <div>{require('html-react-parser')(pageInformation.content)}</div>
+          </div>
+        )}
     </Jumbotron>
   );
 };
