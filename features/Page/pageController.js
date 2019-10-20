@@ -7,6 +7,7 @@ exports.create = async (req, res) => {
     await page.save();
     res.sendStatus(200);
   } catch (error) {
+    console.log(error)
     res.sendStatus(500);
   }
 };
