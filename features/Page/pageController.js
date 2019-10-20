@@ -34,13 +34,21 @@ exports.get = async (req, res) => {
 };
 
 exports.getByCategory = async (req, res) => {
-  const response = await Page.find({ category: req.params.id });
-  res.send(response);
+  try {
+    const response = await Page.find({ category: req.params.id });
+    res.send(response);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 };
 
 exports.getAll = async (req, res) => {
-  const response = await Page.find().populate('category');
-  res.send(response);
+  try {
+    const response = await Page.find().populate('category');
+    res.send(response);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 };
 
 exports.getMainPage = async (req, res) => {
