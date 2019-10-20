@@ -5,11 +5,13 @@ import {
   Navbar,
   InputGroup,
   FormControl,
-  Button
+  Button,
+  Form,
+  Modal
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const NavBar = ({ setPage, history }) => {
+const NavBar = ({ setPage, history, page }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -18,7 +20,11 @@ const NavBar = ({ setPage, history }) => {
   useEffect(() => {
     checkIfIsLoggedIn();
     loadCategories();
-  }, [setIsCreatingCategory]);
+  }, [setIsCreatingCategory, page]);
+
+  useEffect(() => {
+    loadCategories();
+  });
 
   const loadCategories = async () => {
     const categoriesResponse = await fetch('/api/category');
@@ -160,33 +166,40 @@ const NavBar = ({ setPage, history }) => {
         {isLogged && (
           <Nav.Item>
             <Nav.Link eventKey="addCategory" onSelect={onSelectAddCategory}>
-              {isCreatingCategory ? (
-                <InputGroup
-                  className="mb-3"
-                  onChange={({ target: { value } }) => {
-                    setNewCategoryName(value);
-                  }}
-                >
-                  <FormControl
-                    placeholder="Nombre de categoria"
-                    aria-describedby="basic-addon2"
-                  />
-                  <InputGroup.Append>
-                    <Button
-                      variant="outline-secondary"
-                      onClick={submitCategory}
-                    >
-                      Guardar
-                    </Button>
-                  </InputGroup.Append>
-                </InputGroup>
-              ) : (
-                '+'
-              )}
+              +
             </Nav.Link>
           </Nav.Item>
         )}
       </Nav>
+      {isCreatingCategory && (
+        <Modal
+          show={isCreatingCategory}
+          onHide={() => setIsCreatingCategory(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Crear Categoria</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Vida estudiantil"
+                onChange={({ target: { value } }) => setNewCategoryName(value)}
+              />
+            </InputGroup>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setIsCreatingCategory(false)}
+            >
+              Cancelar
+            </Button>
+            <Button variant="primary" onClick={submitCategory}>
+              Guardar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </Navbar>
   );
 };

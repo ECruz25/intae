@@ -65,7 +65,6 @@ const CreatePage = ({ match, history }) => {
           Crear
         </Button>
       </Form>
-      {content}
     </div>
   );
 };

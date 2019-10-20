@@ -3,7 +3,6 @@ import { Link, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import logo from './logo.svg';
 import 'react-quill/dist/quill.snow.css';
 // import './App.css';
-import CreateCareer from './Components/CreateCareer';
 import Home from './Components/Home';
 import Login from './Components/Login';
 import withAuth from './Components/HOC/withAuth';
@@ -17,10 +16,14 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <NavBar setPage={pageName => setPage(pageName)} />
+        <NavBar
+          setPage={pageName => {
+            setPage(pageName);
+          }}
+          page={page}
+        />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/secret" component={withAuth(CreateCareer)} />
           <Route path="/login" component={Login} />
           <Route
             path="/createPage/:categoryId"

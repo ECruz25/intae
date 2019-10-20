@@ -19,7 +19,6 @@ const SingleSectionPage = ({ match, history }) => {
   }, [match, isEditing]);
 
   const loadPageInformation = async () => {
-    debugger;
     const response = await fetch(`/api/page/${match.params.id}`);
     const json = await response.json();
     setTitle(json.title);
