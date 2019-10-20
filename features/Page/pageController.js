@@ -67,3 +67,13 @@ exports.updateMainPage = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+exports.deletePage = async (req, res) => {
+  try {
+    const page = await Page.findByIdAndDelete(req.body._id);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};

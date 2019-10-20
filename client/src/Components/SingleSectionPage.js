@@ -3,7 +3,7 @@ import { Jumbotron, Button, Form } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import { editorModules, editorFormats } from '../settings';
 
-const SingleSectionPage = ({ match }) => {
+const SingleSectionPage = ({ match, history }) => {
   const [pageInformation, setPageInformation] = useState({
     title: '',
     content: ''
@@ -57,6 +57,21 @@ const SingleSectionPage = ({ match }) => {
     }
   };
 
+  const handleDeletePage = async () => {
+    try {
+      const response = await fetch('/api/page', {
+        method: 'DELETE',
+        body: JSON.stringify(pageInformation),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 200) {
+        history.push(`/`);
+      }
+    } catch (error) {}
+  };
+
   return (
     <Jumbotron>
       {isEditing ? (
@@ -93,9 +108,20 @@ const SingleSectionPage = ({ match }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               {pageInformation.title}
               {canEdit && !isEditing && (
-                <Button variant="info" onClick={handleEditClick}>
-                  Editar
-                </Button>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gridColumnGap: '10px'
+                  }}
+                >
+                  <Button variant="info" onClick={handleEditClick}>
+                    Editar
+                  </Button>
+                  <Button variant="danger" onClick={handleDeletePage}>
+                    Eliminar
+                  </Button>
+                </div>
               )}
             </div>
           </h1>
