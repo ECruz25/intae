@@ -28,7 +28,7 @@ const CreatePage = ({ match, history }) => {
       method: 'POST',
       body: JSON.stringify(request),
       headers: {
-        'Content- ': 'application/json'
+        'Content-Type': 'application/json'
       }
     });
     if (response.status === 200) {

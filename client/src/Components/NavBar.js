@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import styles from "./style.module.css";
 
-const NavBar = ({ setPage }) => {
+const NavBar = ({ setPage, history }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -82,6 +82,19 @@ const NavBar = ({ setPage }) => {
     }
   };
 
+  const handleDeleteCategory = async category => {
+    const response = await fetch('/api/category', {
+      method: 'DELETE',
+      body: JSON.stringify(category),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (response.status === 200 && history) {
+      history.push(`/`);
+    }
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Nav onSelect={handleSelect} variant="tabs">
@@ -119,6 +132,15 @@ const NavBar = ({ setPage }) => {
                         >
                           Crear nueva pagina
                         </Link>
+                      </NavDropdown.Item>
+                    )}
+                    {isLogged && category.pages.length === 0 && (
+                      <NavDropdown.Item
+                        eventKey="4.4"
+                        style={{ color: 'red' }}
+                        onClick={() => handleDeleteCategory(category)}
+                      >
+                        Eliminar categoría
                       </NavDropdown.Item>
                     )}
                   </NavDropdown>

@@ -29,6 +29,20 @@ exports.getAll = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
-  const response = await PageCategory.findById(req.params.id);
-  res.send(response);
+  try {
+    const response = await PageCategory.findById(req.params.id);
+    res.send(response);
+  } catch (error) {}
+  console.log(error);
+  res.sendStatus(500);
+};
+
+exports.delete = async (req, res) => {
+  try {
+    const page = await PageCategory.findByIdAndDelete(req.body._id);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
 };

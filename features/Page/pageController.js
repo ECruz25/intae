@@ -35,13 +35,21 @@ exports.get = async (req, res) => {
 };
 
 exports.getByCategory = async (req, res) => {
-  const response = await Page.find({ category: req.params.id });
-  res.send(response);
+  try {
+    const response = await Page.find({ category: req.params.id });
+    res.send(response);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 };
 
 exports.getAll = async (req, res) => {
-  const response = await Page.find().populate('category');
-  res.send(response);
+  try {
+    const response = await Page.find().populate('category');
+    res.send(response);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 };
 
 exports.getMainPage = async (req, res) => {
@@ -62,6 +70,16 @@ exports.updateMainPage = async (req, res) => {
       }
     );
     await page.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
+
+exports.deletePage = async (req, res) => {
+  try {
+    const page = await Page.findByIdAndDelete(req.body._id);
     res.sendStatus(200);
   } catch (error) {
     console.log(error);

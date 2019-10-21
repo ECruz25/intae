@@ -8,6 +8,7 @@ router.get('/:id', pageController.get);
 router.get('/', pageController.getAll);
 router.post('/', withAuth, pageController.create);
 router.put('/', withAuth, pageController.update);
+router.delete('/', withAuth, pageController.deletePage);
 router.put('/main', withAuth, pageController.updateMainPage);
 
 module.exports = router;
